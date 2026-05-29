@@ -190,7 +190,10 @@ export default function SimuladorPage() {
     setTimeout(() => executarPasso("inicio"), 300);
   }
 
+  const inicializadoRef = useRef(false);
   useEffect(() => {
+    if (inicializadoRef.current) return;
+    inicializadoRef.current = true;
     executarPasso("inicio");
   }, []);
 
@@ -204,7 +207,7 @@ export default function SimuladorPage() {
     <>
       <Header titulo="Simulador do Bot" subtitulo="Veja como sera a experiencia do paciente no WhatsApp" />
 
-      <div className="p-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="p-4 sm:p-6 lg:p-8 grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         {/* Coluna lateral - info */}
         <div className="lg:col-span-1 space-y-4">
           <div className="bg-white rounded-xl border border-slate-200 p-6">
