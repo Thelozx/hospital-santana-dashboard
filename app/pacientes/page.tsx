@@ -15,6 +15,7 @@ export default function PacientesPage() {
   const [novoPaciente, setNovoPaciente] = useState({
     nome: "", cpf: "", telefone: "", dataNascimento: "", email: "", endereco: "", convenio: "SUS",
   });
+  const [erroFormulario, setErroFormulario] = useState("");
 
   useEffect(() => {
     setPacientes(getPacientes());
@@ -35,8 +36,9 @@ export default function PacientesPage() {
   }, [pacientes, busca, convenioFiltro]);
 
   function adicionarPaciente() {
+    setErroFormulario("");
     if (!novoPaciente.nome || !novoPaciente.cpf) {
-      alert("Nome e CPF sao obrigatorios");
+      setErroFormulario("Nome e CPF sao obrigatorios");
       return;
     }
     const novo: Paciente = {
@@ -50,11 +52,16 @@ export default function PacientesPage() {
     setNovoPaciente({ nome: "", cpf: "", telefone: "", dataNascimento: "", email: "", endereco: "", convenio: "SUS" });
   }
 
+  function fecharModalCadastro() {
+    setModalAberto(false);
+    setErroFormulario("");
+  }
+
   return (
     <>
       <Header titulo="Pacientes" subtitulo={`${pacientes.length} pacientes cadastrados via bot`} />
 
-      <div className="p-8 space-y-6">
+      <div className="p-4 sm:p-6 lg:p-8 space-y-4 sm:space-y-6">
         {/* Filtros e acoes */}
         <div className="bg-white rounded-xl border border-slate-200 p-4 flex flex-wrap items-center gap-3">
           <div className="relative flex-1 min-w-[240px]">
@@ -196,7 +203,7 @@ export default function PacientesPage() {
       {modalAberto && (
         <div
           className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4 animate-fade-in"
-          onClick={() => setModalAberto(false)}
+          onClick={fecharModalCadastro}
         >
           <div
             onClick={(e) => e.stopPropagation()}
@@ -204,7 +211,7 @@ export default function PacientesPage() {
           >
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-bold text-slate-900">Novo Paciente</h2>
-              <button onClick={() => setModalAberto(false)} className="text-slate-400 hover:text-slate-600">
+              <button onClick={fecharModalCadastro} className="text-slate-400 hover:text-slate-600">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -242,8 +249,14 @@ export default function PacientesPage() {
               </div>
             </div>
 
+            {erroFormulario && (
+              <div className="mt-4 bg-rose-50 border border-rose-200 text-rose-700 px-4 py-3 rounded-xl text-sm animate-fade-in">
+                {erroFormulario}
+              </div>
+            )}
+
             <div className="mt-6 flex justify-end gap-3">
-              <button onClick={() => setModalAberto(false)} className="px-4 py-2 text-sm text-slate-600 hover:bg-slate-100 rounded-lg">
+              <button onClick={fecharModalCadastro} className="px-4 py-2 text-sm text-slate-600 hover:bg-slate-100 rounded-lg">
                 Cancelar
               </button>
               <button onClick={adicionarPaciente} className="px-4 py-2 bg-santana-600 text-white rounded-lg text-sm font-medium hover:bg-santana-700">

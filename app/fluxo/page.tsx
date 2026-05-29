@@ -4,11 +4,13 @@ import { useState } from "react";
 import { Header } from "@/components/Header";
 import { FLUXO_PADRAO, NoFluxo } from "@/lib/mockData";
 import { Plus, Trash2, ArrowRight, MessageSquare, Type, CheckSquare, X, Save, Edit3 } from "lucide-react";
+import { ConfirmModal } from "@/components/ConfirmModal";
 
 export default function FluxoPage() {
   const [nos, setNos] = useState<NoFluxo[]>(FLUXO_PADRAO);
   const [selecionado, setSelecionado] = useState<NoFluxo | null>(null);
   const [editando, setEditando] = useState<NoFluxo | null>(null);
+  const [idParaRemover, setIdParaRemover] = useState<string | null>(null);
 
   function salvarEdicao() {
     if (!editando) return;
@@ -17,10 +19,12 @@ export default function FluxoPage() {
     setSelecionado(editando);
   }
 
-  function removerNo(id: string) {
-    if (!confirm("Tem certeza que deseja remover este passo?")) return;
-    setNos((prev) => prev.filter((n) => n.id !== id));
+  function confirmarRemocao() {
+    if (!idParaRemover) return;
+    setNos((prev) => prev.filter((n) => n.id !== idParaRemover));
     setSelecionado(null);
+    setEditando(null);
+    setIdParaRemover(null);
   }
 
   function adicionarNo() {
@@ -61,7 +65,7 @@ export default function FluxoPage() {
     <>
       <Header titulo="Fluxo de Triagem" subtitulo="Configure as perguntas e respostas do bot" />
 
-      <div className="p-8">
+      <div className="p-4 sm:p-6 lg:p-8">
         <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6 flex items-start gap-3">
           <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0">
             <Edit3 className="w-5 h-5 text-amber-700" />
@@ -218,7 +222,7 @@ export default function FluxoPage() {
 
                 <div className="flex justify-between pt-4 border-t border-slate-100">
                   <button
-                    onClick={() => removerNo(editando.id)}
+                    onClick={() => setIdParaRemover(editando.id)}
                     className="inline-flex items-center gap-2 px-3 py-2 text-rose-600 hover:bg-rose-50 rounded-lg text-sm"
                   >
                     <Trash2 className="w-4 h-4" /> Remover passo
@@ -278,6 +282,17 @@ export default function FluxoPage() {
           </div>
         </div>
       )}
+
+      <ConfirmModal
+        aberto={!!idParaRemover}
+        variante="danger"
+        titulo="Remover este passo?"
+        descricao="Esta acao nao pode ser desfeita. O passo sera removido do fluxo do bot e qualquer conexao apontando para ele sera quebrada."
+        textoConfirmar="Sim, remover"
+        textoCancelar="Manter"
+        onConfirmar={confirmarRemocao}
+        onCancelar={() => setIdParaRemover(null)}
+      />
     </>
   );
 }
