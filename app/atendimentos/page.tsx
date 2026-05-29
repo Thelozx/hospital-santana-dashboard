@@ -38,7 +38,7 @@ export default function AtendimentosPage() {
     <>
       <Header titulo="Atendimentos" subtitulo={`${atendimentos.length} conversas registradas`} />
 
-      <div className="p-8 space-y-6">
+      <div className="p-4 sm:p-6 lg:p-8 space-y-4 sm:space-y-6">
         {/* Filtros */}
         <div className="bg-white rounded-xl border border-slate-200 p-4 flex flex-wrap items-center gap-3">
           <div className="relative flex-1 min-w-[240px]">

@@ -4,6 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Sidebar } from "./Sidebar";
 import { isAuthenticated } from "@/lib/auth";
+import { SidebarProvider } from "@/lib/SidebarContext";
 
 const ROTAS_PUBLICAS = ["/login", "/cadastro"];
 
@@ -42,9 +43,11 @@ export function AuthLayout({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="flex min-h-screen">
-      <Sidebar />
-      <main className="flex-1 min-w-0">{children}</main>
-    </div>
+    <SidebarProvider>
+      <div className="lg:flex min-h-screen">
+        <Sidebar />
+        <main className="flex-1 min-w-0 w-full">{children}</main>
+      </div>
+    </SidebarProvider>
   );
 }

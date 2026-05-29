@@ -52,7 +52,7 @@ export default function DashboardPage() {
         subtitulo="Visao geral dos atendimentos automatizados via WhatsApp"
       />
 
-      <div className="p-8 space-y-6">
+      <div className="p-4 sm:p-6 lg:p-8 space-y-4 sm:space-y-6">
         {/* KPIs */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <KPICard
