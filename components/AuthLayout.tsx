@@ -27,6 +27,11 @@ export function AuthLayout({ children }: { children: React.ReactNode }) {
     }
   }, [pathname, ehPublica, router]);
 
+  // Scroll manual para o topo ao trocar de rota (Next.js pula por causa do header sticky)
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
   if (ehPublica) {
     return <>{children}</>;
   }
