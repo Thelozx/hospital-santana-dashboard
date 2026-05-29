@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Sidebar } from "@/components/Sidebar";
+import { AuthLayout } from "@/components/AuthLayout";
 
 export const metadata: Metadata = {
   title: "Hospital Casa de Saude Santana - Dashboard",
@@ -15,10 +15,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className="bg-slate-50">
-        <div className="flex min-h-screen">
-          <Sidebar />
-          <main className="flex-1 min-w-0">{children}</main>
-        </div>
+        <AuthLayout>{children}</AuthLayout>
       </body>
     </html>
   );
