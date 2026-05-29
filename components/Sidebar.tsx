@@ -139,18 +139,18 @@ export function Sidebar() {
             Sair
           </button>
         </div>
-
-        <ConfirmModal
-          aberto={modalSairAberto}
-          variante="logout"
-          titulo="Sair da plataforma?"
-          descricao={`${user?.nome ? `Ate logo, ${user.nome.split(" ")[0]}!` : ""} Voce precisara fazer login novamente para acessar o painel.`}
-          textoConfirmar="Sim, sair"
-          textoCancelar="Continuar logado"
-          onConfirmar={confirmarLogout}
-          onCancelar={() => setModalSairAberto(false)}
-        />
       </aside>
+
+      <ConfirmModal
+        aberto={modalSairAberto}
+        variante="logout"
+        titulo="Sair da plataforma?"
+        descricao={`${user?.nome ? `Ate logo, ${user.nome.split(" ")[0]}!` : ""} Voce precisara fazer login novamente para acessar o painel.`}
+        textoConfirmar="Sim, sair"
+        textoCancelar="Continuar logado"
+        onConfirmar={confirmarLogout}
+        onCancelar={() => setModalSairAberto(false)}
+      />
     </>
   );
 }
